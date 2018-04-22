@@ -15,11 +15,12 @@
           <div class="filter stopPop" id="filter">
             <dl class="filter-price">
               <dt>Price:</dt>
-              <dd><a href="javascript:void(0)">All</a></dd>
-              <dd v-for="price in priceFilter">
-                <a href="javascript:void(0)">{{price.startPrice}} - {{price.endPrice}}</a>
+              <dd>
+                <a href="javascript:void(0)" >All</a>
+                </dd>
+              <dd v-for="(price,index) in priceFilter" :key="price.id">
+                <a href="javascript:void(0)" :class="{'cur':true}" >{{price.startPrice}} - {{price.endPrice}}</a>
               </dd>
-              
             </dl>
           </div>
 
@@ -57,25 +58,29 @@ import NavBread from './../components/NavBread'
 
 import './../assets/css/base.css'
 import './../assets/css/product.css'
-
+const all = ALL
 export default {
   name: 'GoodsList',
   data () {
     return {
       goods: [],
-      priceFilter:[
+      priceFilter: [
         {
-          startPrice:0.00,
+          startPrice: 0.00,
           endPrice: 500.00
         },
         {
-          startPrice:500.00,
+          startPrice: 500.00,
           endPrice: 1000.00
         },
         {
-          startPrice:1000.00,
+          startPrice: 1000.00,
           endPrice: 2000.00
         },
+        {
+          startPrice: 2000.00,
+          endPrice: 3000.00
+        }
       ]
     }
   },
