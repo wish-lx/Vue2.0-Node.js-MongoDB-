@@ -23,7 +23,7 @@
                 <a href="javascript:void(0)">100 - 500</a>
               </dd>
               <dd>
-                <a href="javascript:void(0)">500 - 1000</a>
+                <a href="javascr ipt:void(0)">500 - 1000</a>
               </dd>
               <dd>
                 <a href="javascript:void(0)">1000 - 2000</a>
@@ -96,10 +96,27 @@
 import NavHeader from './../components/NavHeader'
 import NavFooter from './../components/NavFooter'
 import NavBread from './../components/NavBread'
+import axios from 'axios'
 import './../assets/css/base.css'
 import './../assets/css/product.css'
 export default {
   name: 'GoodsList',
+  data () {
+    return {
+      goodsList: []
+    }
+  },
+  mounted () {
+     this.getGoodsList()
+  },
+  methods: {
+   getGoodsList () {
+     axios.get('/goods').then((result) => {
+       const res = result.data
+       this.goodsList = res.result
+     })
+   }
+  },
   components: {
     NavHeader,
     NavFooter,
