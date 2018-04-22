@@ -96,28 +96,24 @@
 import NavHeader from './../components/NavHeader'
 import NavFooter from './../components/NavFooter'
 import NavBread from './../components/NavBread'
-import axios from 'axios'
+
 import './../assets/css/base.css'
 import './../assets/css/product.css'
+
 export default {
   name: 'GoodsList',
   data () {
     return {
-      goodsList: []
+      goods: []
     }
   },
-  mounted () {
-     this.getGoodsList()
-  },
-  methods: {
-   getGoodsList () {
-     axios.get('/goods').then((result) => {
-       const res = result.data
-       this.goodsList = res.result
+  created () {
+    this.$ajax.get('/goods').then((res) => {
+       const data = res.data
+       this.goods = data.result
      })
-   }
   },
-  components: {
+ components: {
     NavHeader,
     NavFooter,
     NavBread

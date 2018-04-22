@@ -10,17 +10,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 const express = require('express')
+const app = express()
+
+const goodsData = require('./../goods.json')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
-const app = express()
-const router = espress.Router()
-const goodsData = require('./../goods.json')
-router.get('/goods',(res) => {
-  res.json(goodsData)
-})
-app.use(router)
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -52,7 +48,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     watchOptions: {
       poll: config.dev.poll,
     },
-   
+    before(app) {
+      app.get('/goods',(req,res) => {
+        res.json(goodsData)
+      })
+    }
   },
   plugins: [
     new webpack.DefinePlugin({
