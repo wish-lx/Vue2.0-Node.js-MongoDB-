@@ -16,18 +16,10 @@
             <dl class="filter-price">
               <dt>Price:</dt>
               <dd><a href="javascript:void(0)">All</a></dd>
-              <dd>
-                <a href="javascript:void(0)">0 - 100</a>
+              <dd v-for="price in priceFilter">
+                <a href="javascript:void(0)">{{price.startPrice}} - {{price.endPrice}}</a>
               </dd>
-              <dd>
-                <a href="javascript:void(0)">100 - 500</a>
-              </dd>
-              <dd>
-                <a href="javascr ipt:void(0)">500 - 1000</a>
-              </dd>
-              <dd>
-                <a href="javascript:void(0)">1000 - 2000</a>
-              </dd>
+              
             </dl>
           </div>
 
@@ -35,49 +27,15 @@
           <div class="accessory-list-wrap">
             <div class="accessory-list col-4">
               <ul>
-                <li>
+                <li v-for="good in goods" :key="good.id">
                   <div class="pic">
-                    <a href="#"><img src="/static/1.jpg" alt=""></a>
+                    <a href="#">
+                      <img :src="'/static/'+good.prodcutImg" alt="">
+                      </a>
                   </div>
                   <div class="main">
-                    <div class="name">XX</div>
-                    <div class="price">999</div>
-                    <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m">加入购物车</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="pic">
-                    <a href="#"><img src="static/2.jpg" alt=""></a>
-                  </div>
-                  <div class="main">
-                    <div class="name">XX</div>
-                    <div class="price">1000</div>
-                    <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m">加入购物车</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="pic">
-                    <a href="#"><img src="static/3.jpg" alt=""></a>
-                  </div>
-                  <div class="main">
-                    <div class="name">XX</div>
-                    <div class="price">500</div>
-                    <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m">加入购物车</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="pic">
-                    <a href="#"><img src="static/4.jpg" alt=""></a>
-                  </div>
-                  <div class="main">
-                    <div class="name">XX</div>
-                    <div class="price">2499</div>
+                    <div class="name">{{good.productName}}</div>
+                    <div class="price">{{good.prodcutPrice}}</div>
                     <div class="btn-area">
                       <a href="javascript:;" class="btn btn--m">加入购物车</a>
                     </div>
@@ -104,7 +62,21 @@ export default {
   name: 'GoodsList',
   data () {
     return {
-      goods: []
+      goods: [],
+      priceFilter:[
+        {
+          startPrice:0.00,
+          endPrice: 500.00
+        },
+        {
+          startPrice:500.00,
+          endPrice: 1000.00
+        },
+        {
+          startPrice:1000.00,
+          endPrice: 2000.00
+        },
+      ]
     }
   },
   created () {
