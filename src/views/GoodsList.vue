@@ -8,18 +8,18 @@
           <span class="sortby">Sort by:</span>
           <a href="javascript:void(0)" class="default cur">Default</a>
           <a href="javascript:void(0)" class="price">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
-          <a href="javascript:void(0)" class="filterby stopPop">Filter by</a>
+          <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">Filter by</a>
         </div>
         <div class="accessory-result">
           <!-- filter -->
-          <div class="filter stopPop" id="filter">
+          <div class="filter stopPop" id="filter" :class="{'filterby-show':filterBy}">
             <dl class="filter-price">
               <dt>Price:</dt>
               <dd>
                 <a href="javascript:void(0)" :class="{'cur':priceChecked =='all'}" @click="checkAll">All</a>
                 </dd>
               <dd v-for="(price,index) in priceFilter" :key="price.id">
-                <a href="javascript:void(0)" :class="{'cur':priceChecked==index}" @click=" priceChecked = index" >{{price.startPrice}} - {{price.endPrice}}</a>
+                <a href="javascript:void(0)" :class="{'cur':priceChecked==index}" @click="setPriceFilter " >{{price.startPrice}} - {{price.endPrice}}</a>
               </dd>
             </dl>
           </div>
@@ -31,7 +31,7 @@
                 <li v-for="good in goods" :key="good.id">
                   <div class="pic">
                     <a href="#">
-                      <img :src="'/static/'+good.prodcutImg" alt="">
+                      <img v-lazy="'/static/'+good.prodcutImg" alt="">
                       </a>
                   </div>
                   <div class="main">
@@ -48,6 +48,7 @@
         </div>
       </div>
     </div>
+    <div class="md-overlay" v-show="overLayFlag" @click="closePop"></div>
     <nav-footer></nav-footer>
   </div>
 </template>
@@ -82,13 +83,28 @@ export default {
           endPrice: 3000.00
         }
       ],
-      priceChecked: 'all'
+      priceChecked: 'all',
+      filterBy: false,
+      overLayFlag: false
     }
   },
   methods: {
      checkAll () {
        this.priceChecked = 'all'
+     },
+     showFilterPop () {
+       this.filterBy = true
+       this.overLayFlag = true
+     },
+     setPriceFilter (index) {
+      this.priceChecked = index
+      this.closePop()
+     },
+     closePop () {
+      this.filterBy = false
+      this.overLayFlag = false
      }
+
   },
   created () {
     this.$ajax.get('/goods').then((res) => {

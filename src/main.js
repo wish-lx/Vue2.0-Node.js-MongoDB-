@@ -3,8 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueLazyLoad from 'vue-lazyload'
 import axios from 'axios'
 Vue.prototype.$ajax = axios
+Vue.use(VueLazyLoad, {
+  loading: '/static/loading-svg/loading-bars.svg'
+})
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
