@@ -16,10 +16,10 @@
             <dl class="filter-price">
               <dt>Price:</dt>
               <dd>
-                <a href="javascript:void(0)" >All</a>
+                <a href="javascript:void(0)" :class="{'cur':priceChecked =='all'}" @click="checkAll">All</a>
                 </dd>
               <dd v-for="(price,index) in priceFilter" :key="price.id">
-                <a href="javascript:void(0)" :class="{'cur':true}" >{{price.startPrice}} - {{price.endPrice}}</a>
+                <a href="javascript:void(0)" :class="{'cur':priceChecked==index}" @click=" priceChecked = index" >{{price.startPrice}} - {{price.endPrice}}</a>
               </dd>
             </dl>
           </div>
@@ -58,7 +58,7 @@ import NavBread from './../components/NavBread'
 
 import './../assets/css/base.css'
 import './../assets/css/product.css'
-const all = ALL
+
 export default {
   name: 'GoodsList',
   data () {
@@ -81,8 +81,14 @@ export default {
           startPrice: 2000.00,
           endPrice: 3000.00
         }
-      ]
+      ],
+      priceChecked: 'all'
     }
+  },
+  methods: {
+     checkAll () {
+       this.priceChecked = 'all'
+     }
   },
   created () {
     this.$ajax.get('/goods').then((res) => {
